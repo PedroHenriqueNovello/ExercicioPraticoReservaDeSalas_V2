@@ -1,0 +1,8 @@
+# Ignorar pastas de build/compilação do C#
+bin/
+obj/
+
+# Ignorar configurações locais de editores (Visual Studio / VS Code)
+.vs/
+.vscode/
+*.user
