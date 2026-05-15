@@ -16,5 +16,7 @@ namespace ReservaDeSalas
         public bool TemLimpeza { get; set; }
         public bool TemEquipamento { get; set; }
         public bool Acessibilidade { get; set; }
+
+        
     }
 }
