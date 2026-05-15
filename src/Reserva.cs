@@ -12,5 +12,11 @@ namespace ReservaDeSalas
         public Usuario Usuario {get; set;}
         public DateTime Inicio {get; set;}
         public DateTime Fim {get; set;} 
+
+        public bool TemLimpeza { get; set; }
+        public bool TemEquipamento { get; set; }
+        public bool Acessibilidade { get; set; }
+
+        
     }
 }
