@@ -14,20 +14,23 @@ O padrão Builder foi escolhido para separar a construção de um objeto complex
 * **Separação de Responsabilidades**: A classe `Reserva` permanece focada no domínio, enquanto o `ReservaBuilder` cuida da lógica de montagem.
 * **Flexibilidade**: Permite criar diferentes representações do mesmo tipo de objeto sem a necessidade de múltiplos construtores.
 * **Legibilidade**: A implementação utiliza uma *Fluent Interface*, tornando o código de criação altamente intuitivo.
+* **Segurança na Criação**: O método `Build()` inclui validações que garantem que campos obrigatórios (Id, Sala, Usuário e Horário) sejam preenchidos antes da instância ser gerada.
 
-## ⚙️ Novas Funcionalidades (Opcionais de Reserva)
-Através da nova infraestrutura, o sistema agora suporta a inclusão modular de recursos adicionais durante o agendamento:
-* **Projetor Multimídia**: Solicitação automática de equipamentos audiovisuais.
-* **Serviço de Limpeza**: Opção para agendar a higienização da sala.
-* **Cadeiras Extras**: Possibilidade de configurar assentos adicionais.
+## ⚙️ Funcionalidades Adicionais (Itens Opcionais)
+Através do `ReservaBuilder`, o sistema agora permite configurar modularmente as seguintes funcionalidades para cada reserva:
+* **Serviço de Limpeza (`TemLimpeza`)**: Solicitação de higienização prévia ou posterior ao uso da sala.
+* **Equipamento Multimídia (`TemEquipamento`)**: Reserva automática de projetores ou sistemas de som integrados.
+* **Acessibilidade (`Acessibilidade`)**: Configuração que garante que a sala atenda a requisitos de acesso para pessoas com deficiência.
 
-## 💻 Exemplo de Implementação
+## 💻 Exemplo de Uso (Fluent Interface)
 ```csharp
-// Exemplo de criação de uma reserva complexa usando o Builder
-Reserva reservaEspecial = new ReservaBuilder()
-    .DefinirDadosBasicos("RES-V2-001", salaLaboratorio, usuarioDocente)
-    .DefinirHorario(DateTime.Now.AddDays(1), DateTime.Now.AddDays(1).AddHours(3))
-    .ComProjetor(true)
-    .ComLimpeza(true)
-    .ComCadeirasExtras(5)
+// Exemplo de criação de uma reserva completa usando o Builder
+Reserva reservaV2 = new ReservaBuilder()
+    .ComId("RES-V2-001")
+    .ComSala(salaTrabalhoGrupo)
+    .ComUsuario(alunoPedro)
+    .ComHorario(DateTime.Now.AddDays(2), DateTime.Now.AddDays(2).AddHours(4))
+    .ComLimpeza()        // Opcional
+    .ComEquipamento()    // Opcional
+    .ComAcessibilidade() // Opcional
     .Build();
