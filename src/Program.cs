@@ -8,7 +8,7 @@ namespace ReservaDeSalas
         static void Main(string[] args)
         {
             Console.WriteLine("=====================================");
-            Console.WriteLine("  SISTEMA DE RESERVA DE SALAS - V1   ");
+            Console.WriteLine("  SISTEMA DE RESERVA DE SALAS - V2   ");
             Console.WriteLine("=====================================\n");
 
             // 1. SINGLETON: Instância única do Gerenciador
@@ -29,16 +29,27 @@ namespace ReservaDeSalas
             // 5. STRATEGY: Escolhendo a regra de colisão
             IPoliticaDeReserva politica = new PoliticaPrimeiroChegar();
 
-            // 6. Simulando uma Reserva
-            Reserva reserva1 = new Reserva
-            {
-                Id = "RES-001",
-                Sala = salaA1,
-                Usuario = aluno,
-                Inicio = DateTime.Now,
-                Fim = DateTime.Now.AddHours(2),
-                Detalhes = "Estudos para a prova"
-            };
+            // 6. BUILDER: Criando uma Reserva Complexa com Opcionais
+            Console.WriteLine("[SISTEMA] Construindo reserva com padrão Builder...\n");
+            
+            Reserva reserva1 = new ReservaBuilder()
+                .ComId("RES-V2-001")
+                .ComSala(salaA1)
+                .ComUsuario(aluno)
+                .ComHorario(DateTime.Now, DateTime.Now.AddHours(2))
+                .ComLimpeza()        // Configurando atributo opcional
+                .ComEquipamento()    // Configurando atributo opcional
+                .ComAcessibilidade() // Configurando atributo opcional
+                .Build();
+
+            // Imprimindo no terminal para provar que o Builder funcionou
+            Console.WriteLine($"[DEBUG] Detalhes da Reserva Montada:");
+            Console.WriteLine($" - ID: {reserva1.Id}");
+            Console.WriteLine($" - Sala: {reserva1.Sala.Id}");
+            Console.WriteLine($" - Usuário: {reserva1.Usuario.Nome}");
+            Console.WriteLine($" - Limpeza Solicitada: {reserva1.TemLimpeza}");
+            Console.WriteLine($" - Equipamento Solicitado: {reserva1.TemEquipamento}");
+            Console.WriteLine($" - Acessibilidade: {reserva1.Acessibilidade}\n");
 
             Console.WriteLine("[SISTEMA] Tentando processar a reserva...\n");
 
